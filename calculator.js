@@ -1,3 +1,14 @@
+window.onload = function() {
+    document.getElementById('calculate').addEventListener('click', calculateEmissions);
+
+    document.getElementById('download').addEventListener('click', function () {
+        var doc = new jsPDF();
+        var content = document.getElementById('container').textContent;
+        doc.text(content, 10, 10);
+        doc.save('carbon_usage_report.pdf');
+    });
+};
+
 function calculateEmissions() {
     const energySource = document.getElementById('energy-source').value;
     const kwh = document.getElementById('kwh').value;
@@ -41,10 +52,3 @@ function calculateEmissions() {
 
     document.getElementById('result-transportation').textContent = 'Transportation emissions: ' + transportationEmissions.toFixed(2) + ' kg CO2';
 }
-
-document.getElementById('download').addEventListener('click', function () {
-    var doc = new jsPDF();
-    var content = document.getElementById('container').textContent;
-    doc.text(content, 10, 10);
-    doc.save('carbon_usage_report.pdf');
-});
