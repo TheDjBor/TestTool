@@ -3,31 +3,32 @@
 <head>
     <title>Carbon Usage Calculator</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div class="container">
+        <h1>Welcome to the Carbon Usage Calculator</h1>
+        <h2>Calculate your carbon emissions based on your energy usage</h2>
 
-<div class="container">
-    <h1>Welcome to the CIC Carbon Usage Calculator</h1>
-    <h2>Calculate your carbon emissions based on your energy usage per day</h2>
+        <label for="energy-source">Select energy source:</label>
+        <select id="energy-source">
+            <option value="grid">Grid Electricity</option>
+            <option value="solar">Solar Power</option>
+            <option value="wind">Wind Power</option>
+        </select>
 
-    <label for="energy-source">Select energy source:</label>
-    <select id="energy-source">
-        <option value="grid">Grid Electricity</option>
-        <option value="solar">Solar Power</option>
-        <option value="wind">Wind Power</option>
-    </select>
+        <label for="kwh">Enter daily energy usage in kilowatts per hour (kWh):</label>
+        <input type="number" id="kwh" name="kwh" min="0" step="any">
+        <button type="button" onclick="calculateEmissions()">Calculate</button>
 
-    <label for="kwh">Enter daily energy usage in kilowatts per hour (kWh):</label>
-    <input type="number" id="kwh" name="kwh" min="0" step="any">
-    <button type="button" onclick="calculateEmissions()">Calculate</button>
+        <p id="result-daily"></p>
+        <p id="result-weekly"></p>
+        <p id="result-monthly"></p>
+        <p id="result-yearly"></p>
 
-    <p id="result-daily"></p>
-    <p id="result-weekly"></p>
-    <p id="result-monthly"></p>
-    <p id="result-yearly"></p>
-</div>
+        <button type="button" onclick="downloadPDF()">Download as PDF</button>
+    </div>
 
-<script src="calculator.js"></script>
-
+    <script src="calculator.js"></script>
 </body>
 </html>
