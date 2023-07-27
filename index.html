@@ -7,7 +7,6 @@
 <body>
 
 <div class="container">
-    <img src="image004.png" alt="Logo" id="logo">
     <h1>Welcome to the Carbon Usage Calculator</h1>
     <h2>Calculate your carbon emissions based on your energy usage</h2>
 
@@ -20,18 +19,17 @@
 
     <label for="kwh">Enter daily energy usage in kilowatts per hour (kWh):</label>
     <input type="number" id="kwh" name="kwh" min="0" step="any">
-
+    
     <label for="transportation-type">Select transportation type:</label>
     <select id="transportation-type">
         <option value="truck">Truck</option>
         <option value="airplane">Airplane</option>
     </select>
 
-    <label for="distance">Enter transportation distance in kilometers (Annual amount) (km):</label>
+    <label for="distance">Enter transportation distance in kilometers (km):</label>
     <input type="number" id="distance" name="distance" min="0" step="any">
 
     <button type="button" id="calculate">Calculate</button>
-    <button type="button" id="download" style="display: none;">Download Report</button>
 
     <p id="result-energy-daily"></p>
     <p id="result-energy-weekly"></p>
@@ -39,11 +37,12 @@
     <p id="result-energy-yearly"></p>
     <p id="result-transportation"></p>
 
-    <footer>
-        <p>Created by TMG Technologies & CIC ESG Group</p>
-    </footer>
+    <button type="button" id="download">Download Report</button>
 </div>
 
+<img src="path-to-your-logo.png" alt="Logo" id="logo">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
 <script src="calculator.js"></script>
 
 </body>
