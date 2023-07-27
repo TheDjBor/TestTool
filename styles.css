@@ -1,25 +1,71 @@
-.container {
-    width: 80%;
-    margin: auto;
+body {
     font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-h1, h2 {
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    width: 400px;
     text-align: center;
 }
 
-label {
-    display: block;
+.container img {
+    max-width: 100%;
+    height: auto;
+}
+
+.container h1, .container h2 {
+    color: #333;
+}
+
+.container label, .container p {
     margin-top: 20px;
-}
-
-input, select, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-}
-
-footer {
     text-align: left;
-    margin-top: 50px;
+}
+
+.container button {
+    margin-top: 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.container button:hover {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+}
+
+#result-daily, #result-weekly, #result-monthly, #result-yearly, #result-transportation {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+#download {
+    display: none;
+}
+
+#creator {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    font-size: 14px;
 }
