@@ -59,6 +59,7 @@ function calculateEmissions() {
 
     document.getElementById('result-transportation').textContent = `Emission from product transportation: ${emissionTransportation.toFixed(2)} kg`;
 
+    // Result for commuting
     document.getElementById('result-commute').textContent = `Emission from commuting: ${emissionCommute.toFixed(2)} kg`;
 
     document.getElementById('download').style.display = 'block';
@@ -84,16 +85,25 @@ function generatePDF() {
     const distance = document.getElementById('distance').value;
     doc.text(20, 60, `Distance (km): ${distance}`);
 
-    doc.text(20, 70, document.getElementById('result-energy-daily').textContent);
-    doc.text(20, 80, document.getElementById('result-energy-weekly').textContent);
-    doc.text(20, 90, document.getElementById('result-energy-monthly').textContent);
-    doc.text(20, 100, document.getElementById('result-energy-yearly').textContent);
-    doc.text(20, 110, document.getElementById('result-transportation').textContent);
-    doc.text(20, 120, document.getElementById('result-commute').textContent);
+    const days = document.getElementById('days').value;
+    const employees = document.getElementById('employees').value;
+    const commuteDistance = document.getElementById('commute-distance').value;
+    doc.text(20, 70, `Days travelled to work: ${days}`);
+    doc.text(20, 80, `Number of employees: ${employees}`);
+    doc.text(20, 90, `Commute distance per day (km): ${commuteDistance}`);
+
+    doc.text(20, 100, document.getElementById('result-energy-daily').textContent);
+    doc.text(20, 110, document.getElementById('result-energy-weekly').textContent);
+    doc.text(20, 120, document.getElementById('result-energy-monthly').textContent);
+    doc.text(20, 130, document.getElementById('result-energy-yearly').textContent);
+    doc.text(20, 140, document.getElementById('result-transportation').textContent);
+
+    // Result for commuting
+    doc.text(20, 150, document.getElementById('result-commute').textContent);
 
     doc.save('carbon_usage_report.pdf');
 }
 
 document.getElementById('calculate').addEventListener('click', calculateEmissions);
 document.getElementById('download').addEventListener('click', generatePDF);
-d('download').addEventListener('click', generatePDF);
+
