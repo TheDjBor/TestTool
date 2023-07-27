@@ -24,3 +24,13 @@ function calculateEmissions() {
     document.getElementById("result-monthly").innerHTML = "Estimated monthly CO2 emissions: " + monthlyResult.toFixed(2) + " metric tonnes";
     document.getElementById("result-yearly").innerHTML = "Estimated yearly CO2 emissions: " + yearlyResult.toFixed(2) + " metric tonnes";
 }
+
+function downloadPDF() {
+    var doc = new jsPDF();
+    doc.text('Carbon Usage Calculator Results', 10, 10);
+    doc.text(document.getElementById("result-daily").innerHTML, 10, 30);
+    doc.text(document.getElementById("result-weekly").innerHTML, 10, 40);
+    doc.text(document.getElementById("result-monthly").innerHTML, 10, 50);
+    doc.text(document.getElementById("result-yearly").innerHTML, 10, 60);
+    doc.save('carbon_usage_calculator_results.pdf');
+}
