@@ -26,8 +26,18 @@
         <option value="airplane">Airplane</option>
     </select>
 
-    <label for="distance">Enter transportation distance in kilometers (km):</label>
+    <label for="distance">Enter product transportation distance in kilometers (km):</label>
     <input type="number" id="distance" name="distance" min="0" step="any">
+
+    <!-- New inputs for commuting -->
+    <label for="days">Enter the number of days traveled:</label>
+    <input type="number" id="days" name="days" min="0" step="any">
+
+    <label for="employees">Enter the number of employees:</label>
+    <input type="number" id="employees" name="employees" min="0" step="1">
+
+    <label for="commute-distance">Enter the total distance traveled per day (in km):</label>
+    <input type="number" id="commute-distance" name="commute-distance" min="0" step="any">
 
     <button type="button" id="calculate">Calculate</button>
 
@@ -36,8 +46,9 @@
     <p id="result-energy-monthly"></p>
     <p id="result-energy-yearly"></p>
     <p id="result-transportation"></p>
+    <p id="result-commute"></p>
 
-    <button type="button" id="download">Download Report</button>
+    <button type="button" id="download" style="display: none;">Download Report</button>
 </div>
 
 <img src="image004.png" alt="Logo" id="logo">
