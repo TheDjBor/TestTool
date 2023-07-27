@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="container">
     <h1>Welcome to the Carbon Usage Calculator</h1>
     <h2>Calculate your carbon emissions based on your energy usage and transportation method</h2>
 
@@ -30,7 +30,7 @@
     <label for="distance">Enter distance in kilometers:</label>
     <input type="number" id="distance" name="distance" min="0" step="any">
 
-    <button type="button" onclick="calculateEmissions()">Calculate</button>
+    <button type="button" id="calculate">Calculate</button>
 
     <p id="result-energy-daily"></p>
     <p id="result-energy-weekly"></p>
@@ -46,4 +46,3 @@
 
 </body>
 </html>
-
