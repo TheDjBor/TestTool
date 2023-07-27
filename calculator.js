@@ -71,39 +71,49 @@ function generatePDF() {
     doc.setFontSize(20);
     doc.text(20, 20, 'Carbon Usage Report');
 
+    doc.setFontSize(16);
+    doc.text(20, 30, 'Part 1: Energy Usage');
     doc.setFontSize(14);
 
     const energySource = document.getElementById('energy-source').value;
-    doc.text(20, 30, `Energy Source: ${energySource}`);
+    doc.text(20, 40, `Energy Source: ${energySource}`);
 
     const kwh = document.getElementById('kwh').value;
-    doc.text(20, 40, `Energy Usage (Daily kWh): ${kwh}`);
+    doc.text(20, 50, `Energy Usage (Daily kWh): ${kwh}`);
+
+    doc.text(20, 60, document.getElementById('result-energy-daily').textContent);
+    doc.text(20, 70, document.getElementById('result-energy-weekly').textContent);
+    doc.text(20, 80, document.getElementById('result-energy-monthly').textContent);
+    doc.text(20, 90, document.getElementById('result-energy-yearly').textContent);
+
+    doc.setFontSize(16);
+    doc.text(20, 100, 'Part 2: Product Transportation');
+    doc.setFontSize(14);
 
     const transportationType = document.getElementById('transportation-type').value;
-    doc.text(20, 50, `Transportation Type: ${transportationType}`);
+    doc.text(20, 110, `Transportation Type: ${transportationType}`);
 
     const distance = document.getElementById('distance').value;
-    doc.text(20, 60, `Distance (km): ${distance}`);
+    doc.text(20, 120, `Distance (km): ${distance}`);
+
+    doc.text(20, 130, document.getElementById('result-transportation').textContent);
+
+    doc.setFontSize(16);
+    doc.text(20, 140, 'Part 3: Employee Travel Data');
+    doc.setFontSize(14);
 
     const days = document.getElementById('days').value;
     const employees = document.getElementById('employees').value;
     const commuteDistance = document.getElementById('commute-distance').value;
-    doc.text(20, 70, `Days travelled to work: ${days}`);
-    doc.text(20, 80, `Number of employees: ${employees}`);
-    doc.text(20, 90, `Commute distance per day (km): ${commuteDistance}`);
-
-    doc.text(20, 100, document.getElementById('result-energy-daily').textContent);
-    doc.text(20, 110, document.getElementById('result-energy-weekly').textContent);
-    doc.text(20, 120, document.getElementById('result-energy-monthly').textContent);
-    doc.text(20, 130, document.getElementById('result-energy-yearly').textContent);
-    doc.text(20, 140, document.getElementById('result-transportation').textContent);
+    doc.text(20, 150, `Days travelled to work: ${days}`);
+    doc.text(20, 160, `Number of employees: ${employees}`);
+    doc.text(20, 170, `Commute distance per day (km): ${commuteDistance}`);
 
     // Result for commuting
-    doc.text(20, 150, document.getElementById('result-commute').textContent);
+    doc.text(20, 180, document.getElementById('result-commute').textContent);
 
     doc.save('carbon_usage_report.pdf');
 }
 
 document.getElementById('calculate').addEventListener('click', calculateEmissions);
 document.getElementById('download').addEventListener('click', generatePDF);
-
