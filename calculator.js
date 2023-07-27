@@ -1,36 +1,50 @@
 function calculateEmissions() {
-    var emissionFactor;
-    var energySource = document.getElementById("energy-source").value;
+    const energySource = document.getElementById('energy-source').value;
+    const kwh = document.getElementById('kwh').value;
+    const transportationType = document.getElementById('transportation-type').value;
+    const distance = document.getElementById('distance').value;
 
-    if (energySource === "grid") {
-        // Carbon emission factor for UK grid electricity is 0.233 kg CO2 per kWh (as of 2021)
-        emissionFactor = 0.233;
-    } else if (energySource === "solar") {
-        // Carbon emission factor for solar power is 0.048 kg CO2 per kWh (as an example)
-        emissionFactor = 0.048;
-    } else if (energySource === "wind") {
-        // Carbon emission factor for wind power is 0.012 kg CO2 per kWh (as an example)
-        emissionFactor = 0.012;
+    let carbonFactor;
+    switch (energySource) {
+        case 'grid':
+            carbonFactor = 0.233;
+            break;
+        case 'solar':
+            carbonFactor = 0.048;
+            break;
+        case 'wind':
+            carbonFactor = 0.012;
+            break;
     }
 
-    var dailyKwh = document.getElementById("kwh").value;
-    var dailyResult = dailyKwh * emissionFactor;
-    var weeklyResult = (dailyResult * 7) / 1000; // converting to metric tonnes
-    var monthlyResult = (dailyResult * 30) / 1000; // converting to metric tonnes
-    var yearlyResult = (dailyResult * 365) / 1000; // converting to metric tonnes
+    const dailyEmissions = kwh * carbonFactor;
+    document.getElementById('result-energy-daily').textContent = 'Daily emissions: ' + dailyEmissions.toFixed(2) + ' kg CO2';
 
-    document.getElementById("result-daily").innerHTML = "Estimated daily CO2 emissions: " + dailyResult.toFixed(2) + " kg";
-    document.getElementById("result-weekly").innerHTML = "Estimated weekly CO2 emissions: " + weeklyResult.toFixed(2) + " metric tonnes";
-    document.getElementById("result-monthly").innerHTML = "Estimated monthly CO2 emissions: " + monthlyResult.toFixed(2) + " metric tonnes";
-    document.getElementById("result-yearly").innerHTML = "Estimated yearly CO2 emissions: " + yearlyResult.toFixed(2) + " metric tonnes";
+    const weeklyEmissions = dailyEmissions * 7;
+    document.getElementById('result-energy-weekly').textContent = 'Weekly emissions: ' + (weeklyEmissions / 1000).toFixed(2) + ' tonnes CO2';
+
+    const monthlyEmissions = dailyEmissions * 30;
+    document.getElementById('result-energy-monthly').textContent = 'Monthly emissions: ' + (monthlyEmissions / 1000).toFixed(2) + ' tonnes CO2';
+
+    const yearlyEmissions = dailyEmissions * 365;
+    document.getElementById('result-energy-yearly').textContent = 'Yearly emissions: ' + (yearlyEmissions / 1000).toFixed(2) + ' tonnes CO2';
+
+    let transportationEmissions;
+    switch (transportationType) {
+        case 'truck':
+            transportationEmissions = distance * 0.73;
+            break;
+        case 'airplane':
+            transportationEmissions = distance * 0.5;
+            break;
+    }
+
+    document.getElementById('result-transportation').textContent = 'Transportation emissions: ' + transportationEmissions.toFixed(2) + ' kg CO2';
 }
 
-function downloadPDF() {
+document.getElementById('download').addEventListener('click', function () {
     var doc = new jsPDF();
-    doc.text('Carbon Usage Calculator Results', 10, 10);
-    doc.text(document.getElementById("result-daily").innerHTML, 10, 30);
-    doc.text(document.getElementById("result-weekly").innerHTML, 10, 40);
-    doc.text(document.getElementById("result-monthly").innerHTML, 10, 50);
-    doc.text(document.getElementById("result-yearly").innerHTML, 10, 60);
-    doc.save('carbon_usage_calculator_results.pdf');
-}
+    var content = document.getElementById('container').textContent;
+    doc.text(content, 10, 10);
+    doc.save('carbon_usage_report.pdf');
+});
