@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('calculate').addEventListener('click', calculateEmissions);
+    document.getElementById('download').addEventListener('click', downloadPdf);
 });
 
 function calculateEmissions() {
@@ -44,4 +45,11 @@ function calculateEmissions() {
     }
 
     document.getElementById('result-transportation').textContent = 'Transportation emissions: ' + transportationEmissions.toFixed(2) + ' kg CO2';
+}
+
+function downloadPdf() {
+    const doc = new jsPDF();
+    const content = document.getElementById('container').textContent;
+    doc.text(content, 10, 10);
+    doc.save('carbon_usage_report.pdf');
 }
