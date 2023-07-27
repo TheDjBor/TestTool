@@ -20,10 +20,6 @@
     </select>
     <label for="kwh">Enter daily energy usage in kilowatts per hour (kWh):</label>
     <input type="number" id="kwh" name="kwh" min="0" step="any">
-    <p id="result-energy-daily"></p>
-    <p id="result-energy-weekly"></p>
-    <p id="result-energy-monthly"></p>
-    <p id="result-energy-yearly"></p>
     
     <!-- Part 2: Product Transportation -->
     <h3>Part 2: Product Transportation</h3>
@@ -34,7 +30,6 @@
     </select>
     <label for="distance">Enter product transportation distance in kilometers (km):</label>
     <input type="number" id="distance" name="distance" min="0" step="any">
-    <p id="result-transportation"></p>
     
     <!-- Part 3: Employee Travel Data -->
     <h3>Part 3: Employee Travel Data</h3>
@@ -44,9 +39,17 @@
     <input type="number" id="employees" name="employees" min="0" step="1">
     <label for="commute-distance">Enter the total distance traveled per day (in km):</label>
     <input type="number" id="commute-distance" name="commute-distance" min="0" step="any">
-    <p id="result-commute"></p>
 
     <button type="button" id="calculate">Calculate</button>
+    
+    <h3>Results</h3>
+    <p id="result-energy-daily"></p>
+    <p id="result-energy-weekly"></p>
+    <p id="result-energy-monthly"></p>
+    <p id="result-energy-yearly"></p>
+    <p id="result-transportation"></p>
+    <p id="result-commute"></p>
+
     <button type="button" id="download" style="display: none;">Download Report</button>
 </div>
 
