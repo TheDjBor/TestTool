@@ -18,18 +18,17 @@ body {
     text-align: center;
 }
 
-.container img {
-    max-width: 100%;
-    height: auto;
-}
-
 .container h1, .container h2 {
     color: #333;
 }
 
-.container label, .container p {
+.container label {
+    display: block;
     margin-top: 20px;
-    text-align: left;
+}
+
+.container input, .container select {
+    margin-bottom: 20px;
 }
 
 .container button {
@@ -63,9 +62,10 @@ body {
     display: none;
 }
 
-#creator {
+#logo {
     position: fixed;
     left: 10px;
     bottom: 10px;
-    font-size: 14px;
+    width: 100px;
+    height: auto;
 }
