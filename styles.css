@@ -45,7 +45,7 @@ button:hover {
     display: block;
     width: 200px;
     position: absolute;
-    bottom: 10px;
+    top: 10px;
     left: 10px;
 }
 
