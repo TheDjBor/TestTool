@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carbon Usage Calculator</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to the Carbon Usage Calculator</h1>
+    <h2>Calculate your carbon emissions based on your energy usage</h2>
+
+    <label for="energy-source">Select energy source:</label>
+    <select id="energy-source">
+        <option value="grid">Grid Electricity</option>
+        <option value="solar">Solar Power</option>
+        <option value="wind">Wind Power</option>
+    </select>
+
+    <label for="kwh">Enter daily energy usage in kilowatts per hour (kWh):</label>
+    <input type="number" id="kwh" name="kwh" min="0" step="any">
+    <button type="button" onclick="calculateEmissions()">Calculate</button>
+
+    <p id="result-daily"></p>
+    <p id="result-weekly"></p>
+    <p id="result-monthly"></p>
+    <p id="result-yearly"></p>
+</div>
+
+<script src="calculator.js"></script>
+
+</body>
+</html>
