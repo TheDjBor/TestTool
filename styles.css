@@ -1,13 +1,7 @@
-body {
-    font-family: Arial, sans-serif;
-}
-
 .container {
-    width: 60%;
-    margin: 0 auto;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
+    width: 80%;
+    margin: auto;
+    font-family: Arial, sans-serif;
 }
 
 h1, h2 {
@@ -19,37 +13,13 @@ label {
     margin-top: 20px;
 }
 
-input, select {
+input, select, button {
     width: 100%;
     padding: 10px;
-    margin-top: 5px;
-}
-
-button {
-    display: block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: white;
-    color: black;
-    border: 2px solid #008CBA;
+    margin-top: 10px;
 }
 
 footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
     text-align: left;
-    padding-left: 10px;
+    margin-top: 50px;
 }
