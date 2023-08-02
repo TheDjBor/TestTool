@@ -1,45 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carbon Emission Calculator</title>
+    <title>CIC Carbon Usage Calculator</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <h1>Carbon Emission Calculator</h1>
 
-    <h3>Energy Sources:</h3>
-    <label><input type="checkbox" name="energy-source" value="grid"> Grid</label>
-    <label><input type="checkbox" name="energy-source" value="solar"> Solar</label>
-    <label><input type="checkbox" name="energy-source" value="wind"> Wind</label>
-    <label><input type="checkbox" name="energy-source" value="gas"> Gas</label>
-    <label><input type="checkbox" name="energy-source" value="heatpump"> Heat Pump</label>
-    <br>
-    Energy Usage (kWh): <input type="number" id="kwh"><br>
+<div class="container">
+    <h1>Welcome to the CIC Carbon Usage Calculator</h1>
+    <h2>Calculate your carbon emissions based on your energy usage</h2>
 
-    <h3>Transportation Types:</h3>
-    <label><input type="checkbox" name="transportation-type" value="truck"> Truck</label>
-    <label><input type="checkbox" name="transportation-type" value="airplane"> Airplane</label>
-    <label><input type="checkbox" name="transportation-type" value="van"> Van</label>
-    <label><input type="checkbox" name="transportation-type" value="car"> Car</label>
-    <br>
-    Fuel Type: <select id="fuel-type">
-        <option value="standard">Standard</option>
-        <option value="electric">Electric</option>
-    </select><br>
-    Distance (km): <input type="number" id="distance"><br>
+    <!-- Part 1: Energy Usage -->
+    <h3>Part 1: Energy Usage</h3>
+    <label for="energy-source">Select energy source:</label>
+    <select id="energy-source">
+        <option value="grid">Grid Electricity</option>
+        <option value="solar">Solar Power</option>
+        <option value="wind">Wind Power</option>
+    </select>
+    <label for="kwh">Enter daily energy usage in kilowatts per hour (kWh):</label>
+    <input type="number" id="kwh" name="kwh" min="0" step="any">
+    
+    <!-- Part 2: Product Transportation -->
+    <h3>Part 2: Product Transportation</h3>
+    <label for="transportation-type">Select transportation type:</label>
+    <select id="transportation-type">
+        <option value="truck">Truck</option>
+        <option value="airplane">Airplane</option>
+    </select>
+    <label for="distance">Enter product transportation distance in kilometers (km):</label>
+    <input type="number" id="distance" name="distance" min="0" step="any">
+    
+    <!-- Part 3: Employee Travel Data -->
+    <h3>Part 3: Employee Travel Data</h3>
+    <label for="days">Enter the number of days traveled:</label>
+    <input type="number" id="days" name="days" min="0" step="any">
+    <label for="employees">Enter the number of employees:</label>
+    <input type="number" id="employees" name="employees" min="0" step="1">
+    <label for="commute-distance">Enter the total distance traveled per day (in km):</label>
+    <input type="number" id="commute-distance" name="commute-distance" min="0" step="any">
 
-    <h3>Commuting:</h3>
-    Days commuting: <input type="number" id="days"><br>
-    Commute distance (km): <input type="number" id="commute-distance"><br>
-    Petrol cars: <input type="number" id="petrol-cars"><br>
-    Diesel cars: <input type="number" id="diesel-cars"><br>
-    Electric cars: <input type="number" id="electric-cars"><br>
-
-    <button id="calculate">Calculate Emissions</button>
-    <button id="download" style="display:none;">Download PDF</button>
-
-    <h3>Results:</h3>
+    <button type="button" id="calculate">Calculate</button>
+    
+    <h3>Results</h3>
     <p id="result-energy-daily"></p>
     <p id="result-energy-weekly"></p>
     <p id="result-energy-monthly"></p>
@@ -47,9 +50,17 @@
     <p id="result-transportation"></p>
     <p id="result-commute"></p>
 
-    <!-- Include jsPDF library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <!-- Include the JavaScript file -->
-    <script src="script.js"></script>
+    <button type="button" id="download" style="display: none;">Download Report</button>
+</div>
+
+<img src="image004.png" alt="Logo" id="logo">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+<script src="calculator.js"></script>
+
+<footer>
+  <p>Created by TMG Technologies & CIC ESG Group</p>
+</footer>
+
 </body>
 </html>
