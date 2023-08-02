@@ -1,66 +1,56 @@
 const kWhGrid = 0.23314;
 const kWhSolar = 0.0481;
 const kWhWind = 0.0120;
-const kWhGas = 0.2045; // Example value for Gas
-const kWhHeatPump = 0.0567; // Example value for Heat Pump
 
 const kmTruck = 0.000269;
 const kmAirplane = 0.000253;
-const kmVan = 0.000350; // Example value for Van
-const kmCar = 0.000180; // Example value for Car
 
 // Emission factors for commuting
-const kmPetrolCar = 2.7 / 15; // kg CO2 per km
-const kmDieselCar = 2.3 / 15; // kg CO2 per km
-const kmElectricCar = 0.0; // kg CO2 per km for electric cars
+const kmDieselCar = 2.7 / 15; // kg CO2 per km
+const kmPetrolCar = 2.3 / 15; // kg CO2 per km
+const kmCar = (kmDieselCar + kmPetrolCar) / 2; // average
 
 function calculateEmissions() {
-    // Getting selected energy sources (multiple selections possible)
-    const energySources = document.querySelectorAll('input[name="energy-source"]:checked');
+    const energySource = document.getElementById('energy-source').value;
     const kwh = document.getElementById('kwh').value;
 
-    let emissionEnergy = 0;
-    energySources.forEach(source => {
-        switch (source.value) {
-            case 'grid': emissionEnergy += kWhGrid * kwh; break;
-            case 'solar': emissionEnergy += kWhSolar * kwh; break;
-            case 'wind': emissionEnergy += kWhWind * kwh; break;
-            case 'gas': emissionEnergy += kWhGas * kwh; break;
-            case 'heatpump': emissionEnergy += kWhHeatPump * kwh; break;
-        }
-    });
-
-    // Getting selected transportation types and fuel (multiple selections possible)
-    const transportationTypes = document.querySelectorAll('input[name="transportation-type"]:checked');
-    const fuelType = document.getElementById('fuel-type').value;
+    const transportationType = document.getElementById('transportation-type').value;
     const distance = document.getElementById('distance').value;
 
-    let emissionTransportation = 0;
-    transportationTypes.forEach(type => {
-        let emissionFactor;
-        switch (type.value) {
-            case 'truck': emissionFactor = kmTruck; break;
-            case 'airplane': emissionFactor = kmAirplane; break;
-            case 'van': emissionFactor = kmVan; break;
-            case 'car': emissionFactor = kmCar; break;
-        }
-        // Apply fuel type adjustments (e.g., electric might reduce the emission)
-        if (fuelType === 'electric') {
-            emissionFactor *= 0.5; // Example reduction for electric fuel
-        }
-        emissionTransportation += emissionFactor * distance;
-    });
-
-    // Commuting calculations
+    // New calculations for commuting
     const days = document.getElementById('days').value;
+    const employees = document.getElementById('employees').value;
     const commuteDistance = document.getElementById('commute-distance').value;
-    const petrolCars = document.getElementById('petrol-cars').value;
-    const dieselCars = document.getElementById('diesel-cars').value;
-    const electricCars = document.getElementById('electric-cars').value;
 
-    const totalCars = parseInt(petrolCars) + parseInt(dieselCars) + parseInt(electricCars);
-    let totalCommuteDistance = days * totalCars * commuteDistance;
-    let emissionCommute = (petrolCars * kmPetrolCar + dieselCars * kmDieselCar + electricCars * kmElectricCar) * totalCommuteDistance;
+    let emissionEnergy;
+    switch (energySource) {
+        case 'grid':
+            emissionEnergy = kWhGrid * kwh;
+            break;
+        case 'solar':
+            emissionEnergy = kWhSolar * kwh;
+            break;
+        case 'wind':
+            emissionEnergy = kWhWind * kwh;
+            break;
+        default:
+            emissionEnergy = 0;
+    }
+
+    let emissionTransportation;
+    switch (transportationType) {
+        case 'truck':
+            emissionTransportation = kmTruck * distance;
+            break;
+        case 'airplane':
+            emissionTransportation = kmAirplane * distance;
+            break;
+        default:
+            emissionTransportation = 0;
+    }
+
+    let totalCommuteDistance = days * employees * commuteDistance;
+    let emissionCommute = totalCommuteDistance * kmCar;
 
     document.getElementById('result-energy-daily').textContent = `Daily emission from energy usage: ${emissionEnergy.toFixed(2)} kg`;
     document.getElementById('result-energy-weekly').textContent = `Weekly emission from energy usage: ${(emissionEnergy * 7).toFixed(2)} kg`;
@@ -96,28 +86,56 @@ function generatePDF() {
     doc.text(20, 50, `Grid energy (kg CO2 per kWh): ${kWhGrid}`);
     doc.text(20, 60, `Solar energy (kg CO2 per kWh): ${kWhSolar}`);
     doc.text(20, 70, `Wind energy (kg CO2 per kWh): ${kWhWind}`);
-    doc.text(20, 80, `Gas energy (kg CO2 per kWh): ${kWhGas}`);
-    doc.text(20, 90, `Heat Pump energy (kg CO2 per kWh): ${kWhHeatPump}`);
-    doc.text(20, 100, `Truck transport (kg CO2 per km): ${kmTruck}`);
-    doc.text(20, 110, `Airplane transport (kg CO2 per km): ${kmAirplane}`);
-    doc.text(20, 120, `Van transport (kg CO2 per km): ${kmVan}`);
-    doc.text(20, 130, `Car transport (kg CO2 per km): ${kmCar}`);
-    doc.text(20, 140, `Petrol Car commute (kg CO2 per km): ${kmPetrolCar}`);
-    doc.text(20, 150, `Diesel Car commute (kg CO2 per km): ${kmDieselCar}`);
-    doc.text(20, 160, `Electric Car commute (kg CO2 per km): ${kmElectricCar}`);
+    doc.text(20, 80, `Truck transport (kg CO2 per km): ${kmTruck}`);
+    doc.text(20, 90, `Airplane transport (kg CO2 per km): ${kmAirplane}`);
+    doc.text(20, 100, `Car commute (kg CO2 per km): ${kmCar}`);
 
-    // display results
-    doc.text(20, 170, `Daily emission from energy usage: ${document.getElementById('result-energy-daily').textContent}`);
-    doc.text(20, 180, `Weekly emission from energy usage: ${document.getElementById('result-energy-weekly').textContent}`);
-    doc.text(20, 190, `Monthly emission from energy usage: ${document.getElementById('result-energy-monthly').textContent}`);
-    doc.text(20, 200, `Yearly emission from energy usage: ${document.getElementById('result-energy-yearly').textContent}`);
-    doc.text(20, 210, `Emission from product transportation: ${document.getElementById('result-transportation').textContent}`);
-    doc.text(20, 220, `Emission from commuting: ${document.getElementById('result-commute').textContent}`);
+    // Your PDF generation code...
+    doc.setFontSize(16);
+    doc.text(20, 110, 'Part 1: Energy Usage');
+    doc.setFontSize(14);
 
-    // output PDF
-    doc.save('carbon-usage-report.pdf');
+    const energySource = document.getElementById('energy-source').value;
+    doc.text(20, 120, `Energy Source: ${energySource}`);
+
+    const kwh = document.getElementById('kwh').value;
+    doc.text(20, 130, `Energy Usage (Daily kWh): ${kwh}`);
+
+    doc.text(20, 140, document.getElementById('result-energy-daily').textContent);
+    doc.text(20, 150, document.getElementById('result-energy-weekly').textContent);
+    doc.text(20, 160, document.getElementById('result-energy-monthly').textContent);
+    doc.text(20, 170, document.getElementById('result-energy-yearly').textContent);
+
+    doc.setFontSize(16);
+    doc.text(20, 180, 'Part 2: Product Transportation');
+    doc.setFontSize(14);
+
+    const transportationType = document.getElementById('transportation-type').value;
+    doc.text(20, 190, `Transportation Type: ${transportationType}`);
+
+    const distance = document.getElementById('distance').value;
+    doc.text(20, 200, `Distance (km): ${distance}`);
+
+    doc.text(20, 210, document.getElementById('result-transportation').textContent);
+
+    doc.setFontSize(16);
+    doc.text(20, 220, 'Part 3: Employee Travel Data');
+    doc.setFontSize(14);
+
+    const days = document.getElementById('days').value;
+    const employees = document.getElementById('employees').value;
+    const commuteDistance = document.getElementById('commute-distance').value;
+    doc.text(20, 230, `Days travelled to work: ${days}`);
+    doc.text(20, 240, `Number of employees: ${employees}`);
+    doc.text(20, 250, `Commute distance per day (km): ${commuteDistance}`);
+
+    // Result for commuting
+    doc.text(20, 260, document.getElementById('result-commute').textContent);
+
+    doc.save('carbon_usage_report.pdf');
 }
 
 document.getElementById('calculate').addEventListener('click', calculateEmissions);
 document.getElementById('download').addEventListener('click', generatePDF);
+
 
