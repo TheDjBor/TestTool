@@ -6,9 +6,9 @@ const kmTruck = 0.000269;
 const kmAirplane = 0.000253;
 
 // Emission factors for commuting
-const kmDieselCar = 2.7 / 15; // kg CO2 per km
-const kmPetrolCar = 2.3 / 15; // kg CO2 per km
-const kmCar = (kmDieselCar + kmPetrolCar) / 2; // average
+const kmPetrolCar = 2.7 / 15; // kg CO2 per km
+const kmDieselCar = 2.3 / 15; // kg CO2 per km
+const kmElectricCar = 0.0; // kg CO2 per km for electric cars
 
 function calculateEmissions() {
     const energySource = document.getElementById('energy-source').value;
@@ -19,8 +19,16 @@ function calculateEmissions() {
 
     // New calculations for commuting
     const days = document.getElementById('days').value;
-    const employees = document.getElementById('employees').value;
     const commuteDistance = document.getElementById('commute-distance').value;
+
+    const petrolCars = document.getElementById('petrol-cars').value;
+    const dieselCars = document.getElementById('diesel-cars').value;
+    const electricCars = document.getElementById('electric-cars').value;
+
+    const totalCars = parseInt(petrolCars) + parseInt(dieselCars) + parseInt(electricCars);
+
+    let totalCommuteDistance = days * totalCars * commuteDistance;
+    let emissionCommute = (petrolCars * kmPetrolCar + dieselCars * kmDieselCar + electricCars * kmElectricCar) * totalCommuteDistance;
 
     let emissionEnergy;
     switch (energySource) {
@@ -118,19 +126,24 @@ function generatePDF() {
 
     doc.text(20, 210, document.getElementById('result-transportation').textContent);
 
-    doc.setFontSize(16);
-    doc.text(20, 220, 'Part 3: Employee Travel Data');
+doc.setFontSize(16);
+    doc.text(20, 140, 'Part 3: Employee Travel Data');
     doc.setFontSize(14);
 
     const days = document.getElementById('days').value;
-    const employees = document.getElementById('employees').value;
+    const petrolCars = document.getElementById('petrol-cars').value;
+    const dieselCars = document.getElementById('diesel-cars').value;
+    const electricCars = document.getElementById('electric-cars').value;
     const commuteDistance = document.getElementById('commute-distance').value;
-    doc.text(20, 230, `Days travelled to work: ${days}`);
-    doc.text(20, 240, `Number of employees: ${employees}`);
-    doc.text(20, 250, `Commute distance per day (km): ${commuteDistance}`);
+
+    doc.text(20, 150, `Days travelled to work: ${days}`);
+    doc.text(20, 160, `Petrol Cars: ${petrolCars}`);
+    doc.text(20, 170, `Diesel Cars: ${dieselCars}`);
+    doc.text(20, 180, `Electric Cars: ${electricCars}`);
+    doc.text(20, 190, `Commute distance per day (km): ${commuteDistance}`);
 
     // Result for commuting
-    doc.text(20, 260, document.getElementById('result-commute').textContent);
+    doc.text(20, 200, document.getElementById('result-commute').textContent);
 
     doc.save('carbon_usage_report.pdf');
 }
